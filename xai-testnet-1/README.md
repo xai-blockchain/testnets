@@ -1,6 +1,6 @@
-# XAI Testnet 1
+# XAI Devnet (xai-testnet-1)
 
-Public testnet for the XAI blockchain.
+Development network for the XAI blockchain. Access is limited to approved developers and contributors.
 
 ## Chain Information
 
@@ -58,7 +58,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Configure for testnet
+### 3. Configure for devnet
 
 ```bash
 cp .env.example .env
@@ -78,4 +78,4 @@ https://artifacts.xaiblockchain.com
 
 ## Faucet
 
-Request testnet tokens in the XAI Discord.
+Contact the XAI team for devnet tokens.

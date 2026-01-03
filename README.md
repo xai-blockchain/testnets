@@ -1,12 +1,12 @@
-# XAI Testnets
+# XAI Networks
 
-This repository contains configuration and documentation for XAI public testnets.
+This repository contains configuration and documentation for XAI development networks.
 
-## Active Testnets
+## Active Networks
 
 | Network | Chain ID | Status |
 |---------|----------|--------|
-| [xai-testnet-1](./xai-testnet-1/) | `testnet` | Active |
+| [xai-testnet-1](./xai-testnet-1/) | `testnet` | Devnet |
 
 ## Resources
 
