@@ -1,6 +1,15 @@
 # XAI Devnet (xai-testnet-1)
 
-Development network for the XAI blockchain. Access is limited to approved developers and contributors.
+Development network for the XAI blockchain.
+
+## Access
+
+This devnet is currently limited to approved developers and contributors. To request access:
+
+1. Review the [XAI documentation](https://github.com/xai-blockchain/xai)
+2. Contact the XAI team to request devnet tokens
+
+Artifacts and configs are publicly available. Token distribution requires approval.
 
 ## Chain Information
 
@@ -10,6 +19,13 @@ Development network for the XAI blockchain. Access is limited to approved develo
 | Native Token | `XAI` |
 | Address Prefix | `TXAI` |
 | Consensus | Proof of Work |
+
+## Public Resources
+
+| Resource | URL |
+|----------|-----|
+| Explorer | https://explorer.xaiblockchain.com |
+| Artifacts | https://artifacts.xaiblockchain.com |
 
 ## Endpoints
 
@@ -71,11 +87,6 @@ cp .env.example .env
 python -m xai.node
 ```
 
-## Artifacts
+### 5. Request tokens
 
-Configuration files are available at:
-https://artifacts.xaiblockchain.com
-
-## Faucet
-
-Contact the XAI team for devnet tokens.
+Contact the XAI team after your node is synced to receive devnet tokens.
