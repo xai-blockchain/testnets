@@ -1,0 +1,89 @@
+# Claude Code
+.claude/
+
+# Environment files with secrets
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Credentials and keys
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+credentials.json
+secrets.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.venv/
+venv/
+ENV/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+logs/
+
+# Build artifacts
+*.bin
+*.exe
+*.dll
+*.dylib
+*.a
+*.o
+*.obj
+
+# Snapshots (large files)
+*.tar.lz4
+*.tar.gz
+*.tar.bz2
+*.zip
+
+# Backup files
+*.backup
+*.bak
