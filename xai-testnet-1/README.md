@@ -1,87 +1,54 @@
-# XAI Devnet (xai-testnet-1)
+# XAI Testnet (xai-testnet-1)
 
-Development network for the XAI blockchain.
-
-## Become a Contributor
-
-This devnet is for developers interested in long-term contribution to the XAI project. We're building a team of committed contributors to help develop, test, and improve the network before public launch.
-
-### How to Apply
-
-Choose any of the following methods:
-
-1. **GitHub** - [Submit a Devnet Access Request](https://github.com/xai-blockchain/testnets/issues/new?template=devnet-access.yml)
-2. **Email** - Contact dev@xaiblockchain.com with your background and interest
-3. **Discord** - Join [discord.gg/xai](https://discord.gg/xai) and introduce yourself in #devnet-applications
-
-### What We're Looking For
-
-- Developers with blockchain, Python, or AI/ML experience
-- Contributors interested in proof-of-work, UTXO models, or trading systems
-- Long-term commitment to the project
-- Node operators, miners, and SDK developers
+Development network for the XAI blockchain - a Python-based proof-of-work chain focused on AI-powered trading systems.
 
 ## Chain Information
 
 | Property | Value |
 |----------|-------|
-| Network | `testnet` |
+| Network | `xai-testnet-1` |
 | Native Token | `XAI` |
-| Address Prefix | `TXAI` |
+| Address Prefix | `TXAI` (testnet) |
 | Consensus | Proof of Work |
+| Block Time | ~60 seconds |
 
-## Public Resources
+## Public Artifacts
 
-These resources are publicly accessible:
+All artifacts available at: **https://artifacts.xaiblockchain.com**
 
-| Resource | URL |
-|----------|-----|
-| Explorer | https://explorer.xaiblockchain.com |
-| Artifacts | https://artifacts.xaiblockchain.com |
-| Documentation | https://github.com/xai-blockchain/xai |
+| File | URL | Description |
+|------|-----|-------------|
+| config.json | [Download](https://artifacts.xaiblockchain.com/config.json) | Sample node configuration |
+| peers.txt | [Download](https://artifacts.xaiblockchain.com/peers.txt) | P2P peer list |
+| network_info.json | [Download](https://artifacts.xaiblockchain.com/network_info.json) | Network metadata |
 
-## Endpoints
+## Public Endpoints
 
 | Service | URL |
 |---------|-----|
-| JSON-RPC API | http://54.39.129.11:8545 |
-| P2P | 54.39.129.11:8333 |
-| WebSocket | ws://54.39.129.11:8765 |
+| JSON-RPC API | https://testnet-rpc.xaiblockchain.com |
+| WebSocket | wss://testnet-ws.xaiblockchain.com |
+| GraphQL | https://testnet-graphql.xaiblockchain.com |
+| Explorer | https://testnet-explorer.xaiblockchain.com |
+| Faucet | https://testnet-faucet.xaiblockchain.com |
 
-## API Endpoints
+## P2P Nodes
 
-### Get chain stats
-```bash
-curl http://54.39.129.11:8545/stats
+```
+54.39.129.11:8333
+139.99.149.160:8333
 ```
 
-### Get block by height
-```bash
-curl http://54.39.129.11:8545/block/<height>
-```
+## Quick Start
 
-### Get transaction
-```bash
-curl http://54.39.129.11:8545/transaction/<txid>
-```
-
-### Get address balance
-```bash
-curl http://54.39.129.11:8545/address/<address>
-```
-
-## Quick Start (After Approval)
-
-Once your access request is approved:
-
-### 1. Clone repository
+### 1. Clone Repository
 
 ```bash
 git clone https://github.com/xai-blockchain/xai.git
 cd xai
 ```
 
-### 2. Install dependencies
+### 2. Install Dependencies
 
 ```bash
 python3 -m venv venv
@@ -89,19 +56,57 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Configure for devnet
+### 3. Configure for Testnet
 
 ```bash
 cp .env.example .env
-# Edit .env and set XAI_NETWORK=testnet
+# Edit .env and set:
+# XAI_NETWORK=testnet
+# XAI_P2P_SEEDS=54.39.129.11:8333,139.99.149.160:8333
 ```
 
-### 4. Start node
+### 4. Start Node
 
 ```bash
 python -m xai.node
 ```
 
-### 5. Receive tokens
+## API Examples
 
-After approval, you'll receive devnet tokens to your provided wallet address.
+### Get Chain Stats
+```bash
+curl https://testnet-rpc.xaiblockchain.com/stats
+```
+
+### Get Block by Height
+```bash
+curl https://testnet-rpc.xaiblockchain.com/block/100
+```
+
+### Get Transaction
+```bash
+curl https://testnet-rpc.xaiblockchain.com/transaction/<txid>
+```
+
+### Get Address Balance
+```bash
+curl https://testnet-rpc.xaiblockchain.com/address/<address>
+```
+
+## Get Testnet Tokens
+
+Visit the faucet: https://testnet-faucet.xaiblockchain.com
+
+## Become a Contributor
+
+For node operator access or development contribution:
+
+1. **GitHub** - [Submit a Devnet Access Request](https://github.com/xai-blockchain/testnets/issues/new?template=devnet-access.yml)
+2. **Email** - dev@xaiblockchain.com
+3. **Discord** - [discord.gg/xai](https://discord.gg/xai)
+
+## Resources
+
+- [XAI Core Repository](https://github.com/xai-blockchain/xai)
+- [Documentation](https://testnet-docs.xaiblockchain.com)
+- [Block Explorer](https://testnet-explorer.xaiblockchain.com)
