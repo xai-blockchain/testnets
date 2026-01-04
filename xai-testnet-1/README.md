@@ -2,14 +2,24 @@
 
 Development network for the XAI blockchain.
 
-## Access
+## Become a Contributor
 
-This devnet is currently limited to approved developers and contributors. To request access:
+This devnet is for developers interested in long-term contribution to the XAI project. We're building a team of committed contributors to help develop, test, and improve the network before public launch.
 
-1. Review the [XAI documentation](https://github.com/xai-blockchain/xai)
-2. Contact the XAI team to request devnet tokens
+### How to Apply
 
-Artifacts and configs are publicly available. Token distribution requires approval.
+Choose any of the following methods:
+
+1. **GitHub** - [Submit a Devnet Access Request](https://github.com/xai-blockchain/testnets/issues/new?template=devnet-access.yml)
+2. **Email** - Contact dev@xaiblockchain.com with your background and interest
+3. **Discord** - Join [discord.gg/xai](https://discord.gg/xai) and introduce yourself in #devnet-applications
+
+### What We're Looking For
+
+- Developers with blockchain, Python, or AI/ML experience
+- Contributors interested in proof-of-work, UTXO models, or trading systems
+- Long-term commitment to the project
+- Node operators, miners, and SDK developers
 
 ## Chain Information
 
@@ -22,10 +32,13 @@ Artifacts and configs are publicly available. Token distribution requires approv
 
 ## Public Resources
 
+These resources are publicly accessible:
+
 | Resource | URL |
 |----------|-----|
 | Explorer | https://explorer.xaiblockchain.com |
 | Artifacts | https://artifacts.xaiblockchain.com |
+| Documentation | https://github.com/xai-blockchain/xai |
 
 ## Endpoints
 
@@ -57,7 +70,9 @@ curl http://54.39.129.11:8545/transaction/<txid>
 curl http://54.39.129.11:8545/address/<address>
 ```
 
-## Quick Start
+## Quick Start (After Approval)
+
+Once your access request is approved:
 
 ### 1. Clone repository
 
@@ -87,6 +102,6 @@ cp .env.example .env
 python -m xai.node
 ```
 
-### 5. Request tokens
+### 5. Receive tokens
 
-Contact the XAI team after your node is synced to receive devnet tokens.
+After approval, you'll receive devnet tokens to your provided wallet address.

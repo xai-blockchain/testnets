@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Email
+    url: mailto:dev@xaiblockchain.com
+    about: Contact us directly via email for devnet access
+  - name: Discord
+    url: https://discord.gg/xai
+    about: Join our Discord and request access in #devnet-applications
