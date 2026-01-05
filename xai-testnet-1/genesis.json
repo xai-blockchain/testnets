@@ -1,0 +1,72 @@
+{
+  "index": 0,
+  "timestamp": 1730851200.0,
+  "transactions": [
+    {
+      "sender": "COINBASE",
+      "recipient": "xaitest1xvuf5vngzgecf2grmvxxegwg7ysvd7un",
+      "amount": 2500000.0,
+      "fee": 0.0,
+      "timestamp": 1730851200.0,
+      "signature": null,
+      "txid": "834e8559b49dd7e8391e4aa183ae4f52c5c6b0e3a0e81f86150d6877ffdc3357",
+      "comment": "50% of original (2.5M of 121M total)"
+    },
+    {
+      "sender": "COINBASE",
+      "recipient": "xaitest1iekbmi3ahkq5ny3pjkmv7epcssvboxa4",
+      "amount": 9600000.0,
+      "fee": 0.0,
+      "timestamp": 1730851200.0,
+      "signature": null,
+      "txid": "63e71dba939cbe7836cd85f0071dd8986910c37a6c6ec9b212468c15638b6d4f",
+      "comment": "50% of original (9.6M of 121M total)"
+    },
+    {
+      "sender": "COINBASE",
+      "recipient": "xaitest1onwz6lelx7vqd2vsaihgrd2ko5lqeru4",
+      "amount": 6050000.0,
+      "fee": 0.0,
+      "timestamp": 1730851200.0,
+      "signature": null,
+      "txid": "41d027258f013b3f36f11e071160286a7194da91c27aac72618f70756fe26c10",
+      "comment": "50% of original (6.05M of 121M total)"
+    },
+    {
+      "sender": "COINBASE",
+      "recipient": "xaitest1igpz25aehlfqbc2qv6wx4tzjqaiwitbn",
+      "amount": 6050000.0,
+      "fee": 0.0,
+      "timestamp": 1730851200.0,
+      "signature": null,
+      "txid": "b5eafdee670074102b76d39c9be5021c2300b404a49ec8b0620510915a1bec99",
+      "comment": "50% of original (6.05M of 121M total)"
+    },
+    {
+      "sender": "COINBASE",
+      "recipient": "xaitest1cqpcapxkdv6ec2fvpvo5h3hql3gf4t6m",
+      "amount": 36300000.0,
+      "fee": 0.0,
+      "timestamp": 1730851200.0,
+      "signature": null,
+      "txid": "c25f95c12e7fbd15d4197940b2d1cbcda2ffa1d80897bda586da5b61db261e8b",
+      "comment": "50% of original (36.3M of 121M total) - Reserved for mining rewards"
+    },
+    {
+      "sender": "COINBASE",
+      "recipient": "xaitest1gxt2dhojrmqqolmvrdpln7b4avwy5bfm",
+      "amount": 1000000.0,
+      "fee": 0.0,
+      "timestamp": 1730851200.0,
+      "signature": null,
+      "txid": "700ef97b8188fa773c153feef198e90f9bc5137953b80e4f5b4c1213c1ff6edb",
+      "comment": "Testnet faucet allocation (1,000,000 XAI)"
+    }
+  ],
+  "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "nonce": 72306,
+  "difficulty": 4,
+  "hash": "000056bb916faa966146996803c5706d9dd1f74b71fb64387d07b7f2d94d3f6f",
+  "merkle_root": "83e6d28b3e455d5683ed604f996a15f9ec58aa7856d9210c17ecba92975dd5af",
+  "comment": "Genesis with xaitest1 addresses. Allocates 61.5M XAI total, leaving 59.5M for mining rewards to reach 121M cap"
+}

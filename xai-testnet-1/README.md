@@ -8,7 +8,7 @@ Development network for the XAI blockchain - a Python-based proof-of-work chain 
 |----------|-------|
 | Network | `xai-testnet-1` |
 | Native Token | `XAI` |
-| Address Prefix | `TXAI` (testnet) |
+| Address Prefix | `xaitest1` (bech32-style) |
 | Consensus | Proof of Work (SHA-256) |
 | Block Time | ~60 seconds |
 | Python Version | 3.10+ |

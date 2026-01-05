@@ -1,7 +1,7 @@
 {
   "network": "testnet",
   "chain_id": "xai-testnet-1",
-  "address_prefix": "TXAI",
+  "address_prefix": "xaitest1",
   "native_token": "XAI",
   "consensus": "proof_of_work",
   "block_time_seconds": 60,

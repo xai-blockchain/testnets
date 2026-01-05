@@ -5,7 +5,7 @@
   "chain_type": "utxo",
   "pretty_name": "XAI Testnet",
   "chain_id": "xai-testnet-1",
-  "address_prefix": "TXAI",
+  "address_prefix": "xaitest1",
   "native_token": {
     "symbol": "XAI",
     "decimals": 8
