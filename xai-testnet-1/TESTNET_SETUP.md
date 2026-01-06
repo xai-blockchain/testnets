@@ -524,7 +524,7 @@ If consensus fails at any phase:
 
 ## Key Differences from Cosmos SDK Testnets
 
-| Aspect | AURA/PAW (Cosmos) | XAI (Python) |
+| Aspect | Cosmos SDK Chains | XAI (Python) |
 |--------|-------------------|--------------|
 | Consensus | CometBFT (pure BFT) | Hybrid PoI + Validator Finality |
 | Block Production | All validators | Only miners (nodes 1 & 2) |
