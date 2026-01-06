@@ -1,6 +1,0 @@
-# XAI Testnet P2P Peers
-# Format: ip:port
-# Primary node
-54.39.129.11:8333
-# Secondary node
-139.99.149.160:8333
