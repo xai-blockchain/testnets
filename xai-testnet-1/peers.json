@@ -1,0 +1,22 @@
+{
+  "peers": [
+    {
+      "name": "seed-1",
+      "url": "https://testnet-rpc.xaiblockchain.com",
+      "p2p_port": 8333,
+      "type": "seed"
+    },
+    {
+      "name": "rpc",
+      "url": "https://testnet-rpc.xaiblockchain.com",
+      "type": "rpc"
+    },
+    {
+      "name": "ws",
+      "url": "wss://testnet-ws.xaiblockchain.com",
+      "type": "websocket"
+    }
+  ],
+  "updated": "2026-01-12T00:00:00Z",
+  "chain_id": "xai-testnet-1"
+}
