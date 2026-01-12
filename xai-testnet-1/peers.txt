@@ -1,0 +1,18 @@
+# XAI Testnet-1 Persistent Peers
+# Format: node_id@host:p2p_port
+# Use VPN IPs for internal connectivity
+
+# Node 1 - Miner + Validator (xai-testnet)
+validator-1@10.10.0.3:12333
+
+# Node 2 - Miner + Validator (xai-testnet)
+validator-2@10.10.0.3:12334
+
+# Node 3 - Validator (services-testnet)
+validator-3@10.10.0.4:12335
+
+# Node 4 - Validator (services-testnet)
+validator-4@10.10.0.4:12336
+
+# Public endpoint (load-balanced)
+# seed@testnet-rpc.xaiblockchain.com:12333
