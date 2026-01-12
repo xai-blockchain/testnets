@@ -1,0 +1,58 @@
+{
+  "chain_id": "xai-testnet-1",
+  "network_name": "XAI Testnet",
+  "network_type": "testnet",
+  "status": "active",
+  "version": "0.1.0",
+  "native_token": {
+    "symbol": "XAI",
+    "decimals": 18,
+    "denom": "xai"
+  },
+  "block_time_seconds": 10,
+  "consensus": "proof-of-work",
+  "python_version": "3.10+",
+  "genesis_time": "2025-01-01T00:00:00Z",
+  "validators": {
+    "total": 4,
+    "quorum": 3,
+    "miners": 2
+  },
+  "ports": {
+    "rpc": 8545,
+    "p2p": 8333,
+    "websocket": 8766,
+    "metrics": 8545
+  },
+  "endpoints": {
+    "rpc": "https://testnet-rpc.xaiblockchain.com",
+    "api": "https://testnet-api.xaiblockchain.com",
+    "websocket": "wss://testnet-ws.xaiblockchain.com",
+    "metrics": "https://testnet-rpc.xaiblockchain.com/metrics",
+    "stats": "https://testnet-rpc.xaiblockchain.com/stats",
+    "health": "https://testnet-rpc.xaiblockchain.com/health"
+  },
+  "explorers": [
+    {
+      "name": "XAI Explorer",
+      "url": "https://testnet-explorer.xaiblockchain.com",
+      "type": "official"
+    }
+  ],
+  "faucets": [
+    {
+      "url": "https://testnet-faucet.xaiblockchain.com",
+      "amount": "100 XAI",
+      "cooldown_hours": 24
+    }
+  ],
+  "monitoring": {
+    "status": "https://status.xaiblockchain.com",
+    "grafana": "https://monitoring.xaiblockchain.com"
+  },
+  "resources": {
+    "documentation": "https://github.com/xai-blockchain/xai",
+    "artifacts": "https://artifacts.xaiblockchain.com",
+    "snapshots": "https://snapshots.xaiblockchain.com"
+  }
+}
