@@ -5,103 +5,169 @@
 
 ## Network Architecture
 
-| Node | Server | Role | RPC | P2P |
-|------|--------|------|-----|-----|
-| Node 1 | xai-testnet (10.10.0.3) | Miner+Validator | 12545 | 12333 |
-| Node 2 | xai-testnet (10.10.0.3) | Miner+Validator | 12555 | 12334 |
-| Node 3 | services-testnet (10.10.0.4) | Validator | 12546 | 12335 |
-| Node 4 | services-testnet (10.10.0.4) | Validator | 12556 | 12336 |
+The XAI MVP Testnet uses a **sentry node architecture** for DDoS protection. External nodes should connect to sentries, not directly to validators.
+
+```
+                    PUBLIC INTERNET
+                          │
+            ┌─────────────┴─────────────┐
+            │      SENTRY NODES         │
+            │  (Public DDoS Shield)     │
+            │  sentry1 :12371 (P2P)     │
+            │  sentry2 :12372 (P2P)     │
+            └─────────────┬─────────────┘
+                          │ VPN (10.10.0.x)
+            ┌─────────────┴─────────────┐
+            │    VALIDATOR NODES        │
+            │  (Private, Protected)     │
+            │  validator1-4             │
+            └───────────────────────────┘
+```
+
+### Node Table
+
+| Node | Server | Role | RPC | P2P | Public |
+|------|--------|------|-----|-----|--------|
+| Sentry 1 | xai-testnet | Sentry | 12570 | 12371 | Yes |
+| Sentry 2 | xai-testnet | Sentry | 12571 | 12372 | Yes |
+| Validator 1 | xai-testnet (10.10.0.3) | Miner | 12545 | 12333 | No (VPN) |
+| Validator 2 | xai-testnet (10.10.0.3) | Miner | 12555 | 12334 | No (VPN) |
+| Validator 3 | services-testnet (10.10.0.4) | Validator | 12546 | 12335 | No (VPN) |
+| Validator 4 | services-testnet (10.10.0.4) | Validator | 12556 | 12336 | No (VPN) |
+
+## Connecting to the Network
+
+### External Nodes (Recommended)
+
+Connect to sentry nodes for public access:
+
+```bash
+python -m xai.core.node \
+  --peers http://54.39.129.11:12570 http://54.39.129.11:12571 \
+  --data-dir ~/.xai-mvp
+```
+
+Or use public DNS:
+```bash
+python -m xai.core.node \
+  --peers https://testnet-rpc.xaiblockchain.com \
+  --data-dir ~/.xai-mvp
+```
+
+### P2P Peers (for persistent connections)
+
+Add to your node config or use `--peers`:
+```
+sentry-1@54.39.129.11:12371
+sentry-2@54.39.129.11:12372
+```
 
 ## Public Endpoints
 
-- **RPC:** https://testnet-rpc.xaiblockchain.com
-- **API:** https://testnet-api.xaiblockchain.com
-- **Explorer:** https://testnet-explorer.xaiblockchain.com
-- **Faucet:** https://testnet-faucet.xaiblockchain.com
+| Service | URL | Backend |
+|---------|-----|---------|
+| RPC | https://testnet-rpc.xaiblockchain.com | Sentries (load-balanced) |
+| API | https://testnet-api.xaiblockchain.com | Sentries (load-balanced) |
+| WebSocket | wss://testnet-ws.xaiblockchain.com | Sentry 1 |
+| Explorer | https://testnet-explorer.xaiblockchain.com | Sentry 1 |
+| Faucet | https://testnet-faucet.xaiblockchain.com | Direct |
+
+## Running Your Own Node
+
+### Full Node (sync only)
+
+```bash
+# Clone and install
+git clone https://github.com/xai-blockchain/xai.git
+cd xai
+pip install -r requirements.txt
+
+# Run full node (connects to sentries)
+python -m xai.core.node \
+  --network mvp-testnet \
+  --peers http://54.39.129.11:12570 http://54.39.129.11:12571 \
+  --data-dir ~/.xai-mvp \
+  --no-mining
+```
+
+### Validator Node (requires approval)
+
+To run a validator, you need:
+1. Stake XAI tokens (contact team for testnet allocation)
+2. Run behind your own sentry nodes
+3. Use `--pex-disabled` to only connect to your sentries
+
+```bash
+# Your sentry node (public-facing)
+python -m xai.core.node \
+  --sentry-mode \
+  --private-peers YOUR_VALIDATOR_IP:PORT \
+  --peers http://54.39.129.11:12570
+
+# Your validator node (hidden behind sentry)
+python -m xai.core.node \
+  --pex-disabled \
+  --peers http://YOUR_SENTRY:PORT \
+  --mining
+```
 
 ## Configuration
 
-### Fast Mining (Required)
-
-The network type `mvp-testnet` requires explicit fast mining configuration:
+### Fast Mining (Required for all nodes)
 
 ```bash
-XAI_FAST_MINING=1                    # Enable fast mining (caps difficulty at 4)
-XAI_ALLOW_EMPTY_MINING=true          # Allow heartbeat blocks when mempool empty
+export XAI_FAST_MINING=1               # Cap difficulty at 4
+export XAI_ALLOW_EMPTY_MINING=true     # Allow heartbeat blocks
 ```
 
-Without `XAI_FAST_MINING=1`, mining will use difficulty 16+ which is too hard for testnet.
+### Environment Variables
 
-### Key Environment Variables
-
-| Variable | Miner Nodes | Validator Nodes | Description |
-|----------|-------------|-----------------|-------------|
-| `XAI_FAST_MINING` | `1` | - | Cap mining difficulty at 4 |
-| `XAI_ALLOW_EMPTY_MINING` | `true` | - | Mine heartbeat blocks on idle |
-| `XAI_MINING_ENABLED` | `true` | `false` | Enable/disable mining |
+| Variable | Full Node | Validator | Description |
+|----------|-----------|-----------|-------------|
+| `XAI_FAST_MINING` | `1` | `1` | Cap mining difficulty at 4 |
+| `XAI_MINING_ENABLED` | `false` | `true` | Enable mining |
 | `XAI_FINALITY_ENABLED` | `true` | `true` | BFT finality voting |
-| `XAI_API_AUTH_REQUIRED` | `0` | `0` | Disable API auth for testnet |
-| `XAI_FAUCET_WALLET_FILE` | path | - | Faucet wallet for miner nodes |
-| `XAI_FAUCET_AMOUNT` | `10` | - | XAI per faucet claim |
+| `XAI_API_AUTH_REQUIRED` | `0` | `0` | Disable API auth |
 
 ## MVP Module Status
 
-| Module | Status | Notes |
-|--------|--------|-------|
-| blockchain | Enabled | Core chain |
-| consensus | Enabled | Hybrid PoI + BFT |
-| transactions | Enabled | UTXO model |
-| mining | Enabled | PoI mining |
-| p2p | Enabled | Node networking |
-| security | Enabled | Crypto + validation |
-| wallets | Enabled | Key management |
-| api | Enabled | REST/RPC |
-| ai | Disabled | Post-MVP |
-| governance | Disabled | Post-MVP |
-| defi | Disabled | Post-MVP |
-| vm | Disabled | Post-MVP |
-
-## Deployment
-
-```bash
-# Deploy all phases
-./deploy-mvp.sh all
-
-# Or run phases individually
-./deploy-mvp.sh 1  # Stop old & backup
-./deploy-mvp.sh 2  # Deploy xai-testnet
-./deploy-mvp.sh 3  # Deploy services-testnet
-./deploy-mvp.sh 4  # Start & verify
-```
-
-## Health Check
-
-```bash
-# Check all nodes
-for hp in "10.10.0.3:12545" "10.10.0.3:12555" "10.10.0.4:12546" "10.10.0.4:12556"; do
-  echo "$hp: $(curl -s http://$hp/stats | jq -r '.chain_height')"
-done
-```
+| Module | Status |
+|--------|--------|
+| blockchain | Enabled |
+| consensus | Enabled (Hybrid PoI + BFT) |
+| transactions | Enabled (UTXO model) |
+| mining | Enabled (PoI mining) |
+| p2p | Enabled |
+| security | Enabled |
+| wallets | Enabled |
+| api | Enabled (REST/RPC) |
+| sentry | Enabled (DDoS protection) |
+| ai | Disabled (Post-MVP) |
+| governance | Disabled (Post-MVP) |
 
 ## Faucet
 
-Get testnet tokens via RPC endpoint (no captcha required):
+Get testnet tokens:
+
 ```bash
 curl -X POST https://testnet-rpc.xaiblockchain.com/faucet/claim \
   -H "Content-Type: application/json" \
   -d '{"address":"YOUR_ADDRESS"}'
 ```
 
-**Note:** The faucet web UI at testnet-faucet.xaiblockchain.com requires Turnstile captcha.
+Or visit: https://testnet-faucet.xaiblockchain.com
 
-## Service Management
+## Health Check
 
 ```bash
-# xai-testnet
-sudo systemctl {start|stop|restart|status} xai-mvp-node1
-sudo systemctl {start|stop|restart|status} xai-mvp-node2
+# Check via public endpoint
+curl -s https://testnet-rpc.xaiblockchain.com/stats | jq '.chain_height'
 
-# services-testnet
-sudo systemctl {start|stop|restart|status} xai-mvp-node3
-sudo systemctl {start|stop|restart|status} xai-mvp-node4
+# Check metrics
+curl -s https://testnet-rpc.xaiblockchain.com/metrics | grep xai_chain_height
 ```
+
+## Support
+
+- GitHub Issues: https://github.com/xai-blockchain/xai/issues
+- Documentation: https://docs.xaiblockchain.com

@@ -1,18 +1,36 @@
-# XAI MVP Testnet Persistent Peers
-# Format: node_id@host:p2p_port
-# Use VPN IPs for internal connectivity
+# XAI MVP Testnet Peers
+# Updated: 2026-01-13
 
-# Node 1 - Miner + Validator (xai-testnet)
-validator-1@10.10.0.3:12333
+# =============================================================================
+# EXTERNAL NODES: Connect to SENTRY nodes (public, DDoS protected)
+# =============================================================================
+# Sentry nodes are the public-facing entry points for the network.
+# External validators and full nodes should connect to sentries, NOT validators.
 
-# Node 2 - Miner + Validator (xai-testnet)
-validator-2@10.10.0.3:12334
+# Sentry 1 (xai-testnet) - Public P2P endpoint
+sentry-1@54.39.129.11:12371
 
-# Node 3 - Validator (services-testnet)
-validator-3@10.10.0.4:12335
+# Sentry 2 (xai-testnet) - Public P2P endpoint
+sentry-2@54.39.129.11:12372
 
-# Node 4 - Validator (services-testnet)
-validator-4@10.10.0.4:12336
+# Public RPC endpoints (for HTTP API access)
+# https://testnet-rpc.xaiblockchain.com (load-balanced sentries)
+# https://testnet-api.xaiblockchain.com (load-balanced sentries)
 
-# Public endpoint (load-balanced)
-# seed@testnet-rpc.xaiblockchain.com:12333
+# =============================================================================
+# INTERNAL NODES: Validators (VPN only, never expose publicly)
+# =============================================================================
+# These peers are for internal network operations only.
+# External nodes should NOT connect directly to validators.
+
+# Validator 1 - Miner (xai-testnet via VPN)
+# validator-1@10.10.0.3:12333
+
+# Validator 2 - Miner (xai-testnet via VPN)
+# validator-2@10.10.0.3:12334
+
+# Validator 3 (services-testnet via VPN)
+# validator-3@10.10.0.4:12335
+
+# Validator 4 (services-testnet via VPN)
+# validator-4@10.10.0.4:12336
