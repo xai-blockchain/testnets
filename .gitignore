@@ -94,3 +94,4 @@ logs/
 # Backup files
 *.backup
 *.bak
+.wrangler/
