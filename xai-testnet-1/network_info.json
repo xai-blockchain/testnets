@@ -24,6 +24,19 @@
     "websocket": 8766,
     "metrics": 8545
   },
+  "sentry_nodes": {
+    "description": "External nodes should connect to sentry nodes for DDoS protection",
+    "sentry_1": {
+      "address": "54.39.129.11",
+      "rpc_port": 12570,
+      "p2p_port": 12371
+    },
+    "sentry_2": {
+      "address": "54.39.129.11",
+      "rpc_port": 12571,
+      "p2p_port": 12372
+    }
+  },
   "endpoints": {
     "rpc": "https://testnet-rpc.xaiblockchain.com",
     "api": "https://testnet-api.xaiblockchain.com",
