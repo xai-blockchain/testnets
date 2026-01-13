@@ -1,0 +1,37 @@
+[Unit]
+Description=XAI MVP Node 4 (Validator Only)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/xai
+Environment=PYTHONUNBUFFERED=1
+Environment=XAI_NETWORK=mvp-testnet
+Environment=XAI_CHAIN_ID=xai-mvp-testnet-1
+Environment=XAI_DATA_DIR=/home/ubuntu/xai-mvp/node4/data
+Environment=XAI_GENESIS_FILE=/home/ubuntu/xai-mvp/genesis.json
+Environment=XAI_LOG_LEVEL=INFO
+Environment=XAI_MINING_ENABLED=false
+Environment=XAI_FINALITY_ENABLED=true
+Environment=XAI_FINALITY_KEY_FILE=/home/ubuntu/xai-mvp/node4/wallets/validator.json
+Environment=XAI_API_AUTH_REQUIRED=0
+ExecStart=/home/ubuntu/xai/venv/bin/python -m xai.core.node \
+  --host 0.0.0.0 \
+  --port 12556 \
+  --p2p-port 12336 \
+  --data-dir /home/ubuntu/xai-mvp/node4/data \
+  --no-mining \
+  --peers http://10.10.0.3:12545 http://10.10.0.3:12555 http://127.0.0.1:12546
+Restart=always
+RestartSec=10
+TimeoutStartSec=60
+TimeoutStopSec=300
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=xai-mvp-node4
+
+[Install]
+WantedBy=multi-user.target

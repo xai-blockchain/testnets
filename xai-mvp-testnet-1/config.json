@@ -1,0 +1,62 @@
+{
+  "chain_id": "xai-mvp-testnet-1",
+  "network_type": "testnet",
+  "version": "1.0.0-mvp",
+  "endpoints": {
+    "rpc": "https://testnet-rpc.xaiblockchain.com",
+    "api": "https://testnet-api.xaiblockchain.com",
+    "websocket": "wss://testnet-ws.xaiblockchain.com",
+    "metrics": "https://testnet-rpc.xaiblockchain.com/metrics",
+    "stats": "https://testnet-rpc.xaiblockchain.com/stats"
+  },
+  "explorers": [
+    {"name": "XAI Explorer", "url": "https://testnet-explorer.xaiblockchain.com"}
+  ],
+  "faucets": [
+    {"url": "https://testnet-faucet.xaiblockchain.com", "daily_limit": "100000000"}
+  ],
+  "nodes": {
+    "node1": {
+      "server": "xai-testnet",
+      "vpn_ip": "10.10.0.3",
+      "role": "miner+validator",
+      "rpc_port": 12545,
+      "p2p_port": 12333,
+      "ws_port": 12765,
+      "metrics_port": 12000
+    },
+    "node2": {
+      "server": "xai-testnet",
+      "vpn_ip": "10.10.0.3",
+      "role": "miner+validator",
+      "rpc_port": 12555,
+      "p2p_port": 12334,
+      "ws_port": 12766,
+      "metrics_port": 12001
+    },
+    "node3": {
+      "server": "services-testnet",
+      "vpn_ip": "10.10.0.4",
+      "role": "validator",
+      "rpc_port": 12546,
+      "p2p_port": 12335,
+      "ws_port": 12767,
+      "metrics_port": 12002
+    },
+    "node4": {
+      "server": "services-testnet",
+      "vpn_ip": "10.10.0.4",
+      "role": "validator",
+      "rpc_port": 12556,
+      "p2p_port": 12336,
+      "ws_port": 12768,
+      "metrics_port": 12003
+    }
+  },
+  "services": {
+    "explorer": {"port": 12080, "server": "xai-testnet"},
+    "faucet": {"port": 12081, "server": "xai-testnet"},
+    "indexer": {"port": 12084, "server": "xai-testnet"},
+    "graphql": {"port": 12400, "server": "xai-testnet"}
+  }
+}

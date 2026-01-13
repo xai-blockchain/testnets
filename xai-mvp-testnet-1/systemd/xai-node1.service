@@ -1,0 +1,42 @@
+[Unit]
+Description=XAI MVP Node 1 (Miner+Validator)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/xai
+Environment=PYTHONUNBUFFERED=1
+Environment=XAI_NETWORK=mvp-testnet
+Environment=XAI_CHAIN_ID=xai-mvp-testnet-1
+Environment=XAI_DATA_DIR=/home/ubuntu/xai-mvp/node1/data
+Environment=XAI_GENESIS_FILE=/home/ubuntu/xai-mvp/genesis.json
+Environment=XAI_LOG_LEVEL=INFO
+Environment=XAI_MINING_ENABLED=true
+Environment=XAI_RATE_LIMIT_FAUCET=100
+Environment=XAI_RATE_LIMIT_FAUCET_WINDOW=3600
+Environment=XAI_API_AUTH_REQUIRED=0
+Environment=XAI_FAUCET_WALLET_FILE=/home/ubuntu/xai-mvp/wallets/faucet_wallet.json
+Environment=XAI_FAUCET_AMOUNT=10
+Environment=XAI_ALLOW_EMPTY_MINING=true
+Environment=XAI_FINALITY_ENABLED=true
+Environment=XAI_FAST_MINING=1
+ExecStart=/home/ubuntu/xai/venv/bin/python -m xai.core.node \
+  --host 0.0.0.0 \
+  --port 12545 \
+  --p2p-port 12333 \
+  --data-dir /home/ubuntu/xai-mvp/node1/data \
+  --miner xaitest1gxt2dhojrmqqolmvrdpln7b4avwy5bfm \
+  --peers http://127.0.0.1:12555 http://10.10.0.4:12546 http://10.10.0.4:12556
+Restart=always
+RestartSec=10
+TimeoutStartSec=60
+TimeoutStopSec=300
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=xai-mvp-node1
+
+[Install]
+WantedBy=multi-user.target
