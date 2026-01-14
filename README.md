@@ -6,7 +6,7 @@ This repository contains configuration and documentation for XAI development net
 
 | Network | Chain ID | Status | RPC |
 |---------|----------|--------|-----|
-| [xai-testnet-1](./xai-testnet-1/) | `xai-testnet-1` | Active | https://testnet-rpc.xaiblockchain.com |
+| [xai-mvp-testnet-1](./xai-mvp-testnet-1/) | `xai-mvp-testnet-1` | Active | https://testnet-rpc.xaiblockchain.com |
 
 ## Quick Reference
 

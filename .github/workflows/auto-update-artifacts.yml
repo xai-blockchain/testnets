@@ -1,0 +1,148 @@
+name: Auto-Update Testnet Artifacts
+
+on:
+  schedule:
+    # Every 6 hours for peers
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action to perform'
+        required: true
+        default: 'sync-all'
+        type: choice
+        options:
+          - sync-all
+          - update-peers
+          - update-docs
+
+env:
+  CHAIN_ID: xai-testnet-1
+  R2_BUCKET: xai-testnet-artifacts
+
+jobs:
+  update-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout testnets repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install wrangler
+        run: npm install -g wrangler
+
+      - name: Fetch latest chain info
+        id: chain-info
+        run: |
+          # XAI uses different API format
+          STATUS=$(curl -s https://testnet-rpc.xaiblockchain.com/status || echo '{}')
+          HEIGHT=$(echo "$STATUS" | jq -r '.chain_height // "unknown"')
+          BLOCK_HASH=$(echo "$STATUS" | jq -r '.latest_block_hash // ""')
+
+          echo "height=$HEIGHT" >> $GITHUB_OUTPUT
+          echo "block_hash=$BLOCK_HASH" >> $GITHUB_OUTPUT
+
+      - name: Fetch live peers
+        id: peers
+        run: |
+          PEERS=$(curl -s https://testnet-rpc.xaiblockchain.com/peers | \
+            jq -r '.peers[] | .node_id + "@" + .address' 2>/dev/null | \
+            head -20 || echo "")
+          echo "$PEERS" > peers_live.txt
+          echo "count=$(wc -l < peers_live.txt)" >> $GITHUB_OUTPUT
+
+      - name: Update peers.txt
+        run: |
+          cat > ${{ env.CHAIN_ID }}/peers.txt << 'EOF'
+          # XAI Testnet (${{ env.CHAIN_ID }}) Peers
+          # Generated: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+          # Auto-updated every 6 hours via GitHub Actions
+          #
+          # Public sentry nodes:
+          sentry1@54.39.129.11:12371
+          sentry2@54.39.129.11:12372
+
+          # Live peers:
+          EOF
+          cat peers_live.txt >> ${{ env.CHAIN_ID }}/peers.txt
+
+      - name: Update README checkpoint info
+        run: |
+          # Update checkpoint sync info in README
+          if [ -f "${{ env.CHAIN_ID }}/README.md" ]; then
+            sed -i "s/Latest Height:.*/Latest Height: ${{ steps.chain-info.outputs.height }}/" ${{ env.CHAIN_ID }}/README.md
+            sed -i "s/Updated:.*/Updated: $(date -u +%Y-%m-%dT%H:%M:%SZ)/" ${{ env.CHAIN_ID }}/README.md
+          fi
+
+      - name: Update SNAPSHOTS.md
+        run: |
+          cat > ${{ env.CHAIN_ID }}/SNAPSHOTS.md << EOF
+          # XAI Testnet Snapshots
+
+          > **Updated**: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+          > **Chain ID**: ${{ env.CHAIN_ID }}
+          > **Height**: ${{ steps.chain-info.outputs.height }}
+
+          ## Download
+
+          \`\`\`bash
+          # Download latest snapshot
+          curl -L https://artifacts.xaiblockchain.com/${{ env.CHAIN_ID }}/snapshots/latest.tar.gz -o snapshot.tar.gz
+
+          # Extract
+          tar -xzf snapshot.tar.gz -C ~/xai/data/
+          \`\`\`
+
+          ## Checkpoint Sync
+
+          XAI supports checkpoint sync for faster initial sync:
+
+          \`\`\`bash
+          xai-node --checkpoint-sync --checkpoint-url https://artifacts.xaiblockchain.com/${{ env.CHAIN_ID }}/checkpoints/
+          \`\`\`
+
+          ## Schedule
+
+          - Daily snapshots at 00:00 UTC
+          - Checkpoints every 1000 blocks
+          - Retained for 7 days
+
+          ---
+          *Auto-updated by GitHub Actions*
+          EOF
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: auto-update testnet artifacts $(date +%Y-%m-%d)"
+            git push
+          fi
+
+      - name: Upload to R2
+        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 */6 * * *'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          # Upload peers.txt
+          wrangler r2 object put ${{ env.R2_BUCKET }}/${{ env.CHAIN_ID }}/peers.txt \
+            --file ${{ env.CHAIN_ID }}/peers.txt --remote
+
+          # Upload chain-status.json
+          cat > /tmp/chain-status.json << EOF
+          {
+            "chain_id": "${{ env.CHAIN_ID }}",
+            "height": "${{ steps.chain-info.outputs.height }}",
+            "block_hash": "${{ steps.chain-info.outputs.block_hash }}",
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          }
+          EOF
+          wrangler r2 object put ${{ env.R2_BUCKET }}/${{ env.CHAIN_ID }}/chain-status.json \
+            --file /tmp/chain-status.json --remote
